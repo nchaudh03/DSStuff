@@ -1,0 +1,17 @@
+version: '3'
+services:
+  web:
+    image: "h20:v1"
+    ports:
+      - "54321:54321"
+    volumes:
+      - C:\pythonproj\TK:/app
+    working_dir: /opt
+    command: >
+      bash -c "java -Xmx6g -jar h2o.jar"
+
+      
+      
+     
+
+    

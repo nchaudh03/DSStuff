@@ -1,0 +1,11 @@
+h2o==3.30.0.7
+pandas
+pypyodb
+numpy
+scikit-learn
+xlrd
+xlwt
+matplotlib
+openpyxl
+flask 
+dash

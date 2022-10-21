@@ -1,0 +1,14 @@
+[default]
+nai = "test"
+
+
+[dev]
+nai = "wohoo"
+
+[dev.mlflow]
+
+[prod]
+nai = "oooYea"
+
+[prod.mlflow]
+link="sfdsf"

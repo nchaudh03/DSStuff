@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "models"
+version = "0.1.0"
+description = ""
+authors = ["Naimesh Chaudhari <nchaudh03@gmail.com>"]
+
+[tool.poetry.dependencies]
+python =">=3.8,<3.11"
+scikit-learn = "^1.1.2"
+pydantic = "^1.10.0"
+pandas = "^1.4.3"
+numpy = "^1.23.2"
+kaggle = "^1.5.12"
+mypy = "^0.971"
+dynaconf = "^3.1.9"
+optuna = "^3.0.0"
+pandas-stubs = "^1.4.3"
+xgboost = "^1.6.2"
+lightgbm = "^3.3.2"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+autopep8 = "^1.7.0"
+ipdb = "^0.13.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+app = "models.src.app:main"
+para = "models.src.helpers.parameters:main"

@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+spec:
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: 'false'
+    spec:
+      containers:
+        - name: training-container
+          image: docker.io/nchaudh03/katlib-iris:latest
+          command:
+            - "python"
+            - "kubeflow/train.py"
+            - "--n_estimators=${trialParameters.n_estimators}"
+      restartPolicy: Never

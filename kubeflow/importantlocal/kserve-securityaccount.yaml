@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: kservingsa
+  namespace: kubeflow-user-example-com
+secrets:
+- name: aws-secret
