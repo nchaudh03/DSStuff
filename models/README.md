@@ -1,2 +1,2 @@
 # models
-my attempt and simplifying ml-tasks
+my attempt at simplifying ml-tasks
