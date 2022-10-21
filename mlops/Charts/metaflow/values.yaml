@@ -1,0 +1,31 @@
+metaflow-service:
+  metadatadb:
+    password: metaflow
+    name: metaflow
+    user: metaflow
+  
+  ingress:
+    enabled: false
+    hosts:
+      - host: localhost
+
+  
+metaflow-ui:
+  metadatadb:
+    password: metaflow
+    name: metaflow
+    user: metaflow
+
+  ingress:
+    enabled: false
+    hosts:
+      - host: localhost
+  
+  env:
+
+
+postgresql:
+  enabled: false
+  postgresqlPassword: metaflow
+  postgresqlDatabase: metaflow
+  postgresqlUsername: metaflow

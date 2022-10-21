@@ -1,0 +1,6 @@
+name: mlops
+description: A minimal Kubernetes Python Pulumi program
+runtime:
+    name: python
+    options:
+        virtualenv: venv
