@@ -6,16 +6,22 @@ from pulumi_kubernetes.apps.v1 import Deployment
 from pulumi_kubernetes.core.v1 import Service
 from pulumi_kubernetes.helm.v3 import Chart, LocalChartOpts,ChartOpts,FetchOpts
 from pulumi_kubernetes.helm.v3 import Release, ReleaseArgs, RepositoryOptsArgs
+from pulumi_kubernetes.kustomize import Directory
 import json
+import configparser
 
-def get_secrets(name: str):
-    f = open(name)
-    data = json.load(f)
-    f.close()
+
+def get_secrets():
+    config = configparser.RawConfigParser()
+    config.read("/home/nchaudh03/.aws/credentials")
+    data = {
+        'AWS_ACCESS_KEY_ID' : config.get('default', 'aws_access_key_id'),
+        'AWS_SECRET_ACCESS_KEY' : config.get('default', 'aws_secret_access_key')
+    }
     return data
 
 
-secrets = get_secrets('aws_access.json')
+secrets = get_secrets()
 
 AWS_USERNAME = secrets['AWS_ACCESS_KEY_ID']
 AWS_PASSWORD = secrets['AWS_SECRET_ACCESS_KEY']
@@ -190,6 +196,50 @@ metaflow = Chart(
 
 
 # HyperParameter Tuning: katib
+#namespace
+katibNamespace = Directory(
+    "katib-namespace",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/namespace",
+)
+
+#conroller
+katibController = Directory(
+    "katib-controller",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/controller",
+)
+#crd
+katibCrd = Directory(
+    "katib-crd",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/crd",
+)
+#db-manager
+katibDBmanager = Directory(
+    "katib-dbmanager",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/db-manager",
+)
+#mysql
+# kubectl get secret katib-mysql-secrets -o yaml | sed 's/namespace: .*/namespace: kubeflow/' | kubectl apply -f -
+katibmysql = Directory(
+    "katib-mysql",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/mysql",
+)
+#ui
+katibui = Directory(
+    "katib-ui",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/ui",
+)
+#cert-generator
+katibCertGenerator = Directory(
+    "katib-cert",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/cert-generator",
+)
+#webhook
+katibwebhook = Directory(
+    "katib-webhook",
+    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/webhook",
+)
+
+
 # ARGOWORKFLOW
 
 # Serving seldon core/kserve/ fast api # mlrun??
