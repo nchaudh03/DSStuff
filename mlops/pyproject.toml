@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "mlops"
+version = "0.1.0"
+description = ""
+authors = ["NaimeshC <nchaudh03@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pulumi = "^3.52.1"
+pulumi-kubernetes = "^3.23.1"
+configparser = "^5.3.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

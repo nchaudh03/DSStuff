@@ -195,53 +195,16 @@ metaflow = Chart(
 )
 
 
-# HyperParameter Tuning: katib
-#namespace
-katibNamespace = Directory(
-    "katib-namespace",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/namespace",
+## Jenkins
+jenkins = Chart(
+    "jenkins",
+    ChartOpts(
+        chart="jenkins",
+        version="4.3.23",
+        fetch_opts=FetchOpts(
+            repo="https://charts.jenkins.io",
+        ),
+        values = {'controller': {'ingress': {'enabled': True, 'hostName': 'jenkins.localhost'}}},
+    ),
 )
 
-#conroller
-katibController = Directory(
-    "katib-controller",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/controller",
-)
-#crd
-katibCrd = Directory(
-    "katib-crd",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/crd",
-)
-#db-manager
-katibDBmanager = Directory(
-    "katib-dbmanager",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/db-manager",
-)
-#mysql
-# kubectl get secret katib-mysql-secrets -o yaml | sed 's/namespace: .*/namespace: kubeflow/' | kubectl apply -f -
-katibmysql = Directory(
-    "katib-mysql",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/mysql",
-)
-#ui
-katibui = Directory(
-    "katib-ui",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/ui",
-)
-#cert-generator
-katibCertGenerator = Directory(
-    "katib-cert",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/cert-generator",
-)
-#webhook
-katibwebhook = Directory(
-    "katib-webhook",
-    directory="https://github.com/kubeflow/katib/tree/master/manifests/v1beta1/components/webhook",
-)
-
-
-# ARGOWORKFLOW
-
-# Serving seldon core/kserve/ fast api # mlrun??
-# istio
-# Monitoring/Logging
