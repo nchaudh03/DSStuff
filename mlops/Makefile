@@ -14,7 +14,7 @@ install_helm:
 	rm ./get_helm.sh
 
 install_pulumi:
-	curl -fsSL https://get.pulumi.com | sh
+	curl -fsSL https://get.pulumi.com | bash
 	source ~/.bashrc
 	pulumi login --local
 

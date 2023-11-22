@@ -15,8 +15,8 @@ def get_secrets():
     config = configparser.RawConfigParser()
     config.read("/home/nchaudh03/.aws/credentials")
     data = {
-        'AWS_ACCESS_KEY_ID' : config.get('default', 'aws_access_key_id'),
-        'AWS_SECRET_ACCESS_KEY' : config.get('default', 'aws_secret_access_key')
+        'AWS_ACCESS_KEY_ID' : "hhah", # config.get('default', 'aws_access_key_id'),
+        'AWS_SECRET_ACCESS_KEY' : "haha" #config.get('default', 'aws_secret_access_key')
     }
     return data
 
@@ -31,6 +31,8 @@ POSTGRES_PASS = "thisismypassword"
 POSTGRES_DATABASE = "mlflow"
 POSTGRES_HOST = "postgres-postgresql.default.svc.cluster.local" #service-name.namespace.svc.cluster.local
 
+MINIO_USERNAME="thisismyusername"
+MINIO_PASSWORD="minio_key"
 
 MLFLOW_BUCKET = "mlflowv2"
 
@@ -56,7 +58,7 @@ postgre = Chart(
     ),
 )
 
-"""
+
 # Minio <S3 Storage>
 MINIO_BUCKET = "mlflow,metaflow"
 MINIO_URL = "http://minio.default.svc.cluster.local:9000"
@@ -86,7 +88,7 @@ minio = Chart(
 
     ),
 )
-"""
+
 
 #-------------------For Mlflow Pod Environmnet----------------------------------------#
 # Below env variables need to be set
@@ -118,7 +120,7 @@ mlflow = Chart(
         "defaultArtifactRoot" : f"s3://{MLFLOW_BUCKET}",
         "minio" : {
             "enabled" : True,
-            #"path" : MINIO_URL,
+            "path" : MINIO_URL,  #disable this to go back to s3
             "access_key_id" : AWS_USERNAME,
             "secret_access_key" : AWS_PASSWORD
         }
@@ -200,11 +202,26 @@ jenkins = Chart(
     "jenkins",
     ChartOpts(
         chart="jenkins",
-        version="4.3.23",
+        version="4.8.2",
         fetch_opts=FetchOpts(
             repo="https://charts.jenkins.io",
         ),
-        values = {'controller': {'ingress': {'enabled': True, 'hostName': 'jenkins.localhost'}}},
+        values = {
+            'controller': {'ingress': {
+                'enabled': True,
+                'hostName': 'jenkins.localhost'
+                }
+                           },
+            'additionalAgents' : {'podman' : {
+                'podName' : 'podman',
+                'image' : 'jenkins',
+                'customJenkinsLabels' : 'podman',
+                'tag' : 'latest',
+                'privileged' : 'true',
+                'alwaysPullImage' : 'true'
+            }
+                                  }
+            },
     ),
 )
 
